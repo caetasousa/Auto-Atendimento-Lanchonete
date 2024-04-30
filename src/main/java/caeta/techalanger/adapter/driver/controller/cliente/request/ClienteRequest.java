@@ -1,6 +1,6 @@
 package caeta.techalanger.adapter.driver.controller.cliente.request;
 
-import caeta.techalanger.adapter.driven.infra.repository.cliente.validator.UniqueCPF;
+import caeta.techalanger.adapter.driver.controller.cliente.validator.UniqueCPF;
 import caeta.techalanger.core.domain.Cliente;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -1,0 +1,6 @@
+CREATE TABLE produto (
+    id BIGSERIAL PRIMARY KEY,
+    nome VARCHAR NOT NULL,
+    preco NUMERIC NOT NULL,
+    categoria VARCHAR NOT NULL
+);

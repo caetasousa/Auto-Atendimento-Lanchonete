@@ -1,4 +1,4 @@
-package caeta.techalanger.adapter.driven.infra.repository.cliente.validator;
+package caeta.techalanger.adapter.driver.controller.cliente.validator;
 
 import caeta.techalanger.adapter.driven.infra.repository.cliente.ClienteEntity;
 import caeta.techalanger.adapter.driven.infra.repository.cliente.ClienteRepository;
