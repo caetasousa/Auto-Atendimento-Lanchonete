@@ -37,7 +37,7 @@ public class ClienteController {
 
     @GetMapping("/{cpf}")
     public ResponseEntity<ClienteResponse> buscaClientePorCpf(@PathVariable String cpf) {
-        Cliente clienteEncontrado = servicePort.consultarCliente(cpf);
+        Cliente clienteEncontrado = servicePort.consultarClientePorCPF(cpf);
         return ResponseEntity.ok(ClienteResponse.paraDomainResponse(clienteEncontrado));
     }
 }

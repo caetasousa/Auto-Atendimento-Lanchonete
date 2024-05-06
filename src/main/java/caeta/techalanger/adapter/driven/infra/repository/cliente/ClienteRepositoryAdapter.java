@@ -18,7 +18,7 @@ public class ClienteRepositoryAdapter implements ClienteRepositoryPort {
     }
 
     @Override
-    public Cliente consultarCPF(String cpf) {
+    public Cliente findByCPF(String cpf) {
         ClienteEntity consulta = repository.findByCpf(cpf).orElseThrow(() -> new RuntimeException("Cliente não encontrado para o CPF: " + cpf));
 
         return new Cliente(consulta.getId(), consulta.getNome(), consulta.getCpf(), consulta.getEmail());

@@ -7,10 +7,11 @@ import java.util.List;
 
 public interface ProdutoRepositoryPort {
 
-    Produto cadastraProduto(Produto produto);
-    Produto editaProduto(Long id, Produto produto);
-    void removerProduto(Long id);
-    List<Produto> buscarProdutoPorCategoria(Categoria categoria);
-    Produto buscarProdutoPorId(Long id);
+    Produto salvar(Produto produto);
+    Produto update(Long id, Produto produto);
+    void delete(Long id);
+    List<Produto> findByCategoria(Categoria categoria);
+    Produto findById(Long id);
 }
+
 

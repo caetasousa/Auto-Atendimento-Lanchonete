@@ -1,5 +1,6 @@
 package caeta.techalanger.adapter.driven.infra.repository.cliente;
 
+import caeta.techalanger.core.domain.Cliente;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -34,6 +35,10 @@ public class ClienteEntity {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
+    }
+
+    public Cliente paraCliente(){
+        return new Cliente(id, nome, cpf, email);
     }
 
     public Long getId() {

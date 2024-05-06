@@ -16,7 +16,7 @@ public class ProdutoRepositoryAdapter implements ProdutoRepositoryPort {
     ProdutoRepository repository;
 
     @Override
-    public Produto cadastraProduto(Produto produto) {
+    public Produto salvar(Produto produto) {
         ProdutoEntity novoProduto = new ProdutoEntity(produto.getNome(), produto.getPreco(), produto.getCategoria());
 
         repository.save(novoProduto);
@@ -27,7 +27,7 @@ public class ProdutoRepositoryAdapter implements ProdutoRepositoryPort {
     }
 
     @Override
-    public Produto editaProduto(Long id, Produto produto) {
+    public Produto update(Long id, Produto produto) {
         ProdutoEntity editaProduto = repository.findById(id).orElseThrow(() -> new RuntimeException("Pdroduto não encontrado com esse id: " + id));
 
         editaProduto.setNome(produto.getNome());
@@ -45,12 +45,12 @@ public class ProdutoRepositoryAdapter implements ProdutoRepositoryPort {
     }
 
     @Override
-    public void removerProduto(Long id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 
     @Override
-    public List<Produto> buscarProdutoPorCategoria(Categoria categoria) {
+    public List<Produto> findByCategoria(Categoria categoria) {
         List<ProdutoEntity> produtoResposta = repository.findAllByCategoria(categoria);
         List<Produto> produtos = new ArrayList<>();
         for (ProdutoEntity produtoEntity : produtoResposta) {
@@ -67,27 +67,8 @@ public class ProdutoRepositoryAdapter implements ProdutoRepositoryPort {
     }
 
     @Override
-    public Produto buscarProdutoPorId(Long id) {
+    public Produto findById(Long id) {
         ProdutoEntity recuperaProduto = repository.findById(id).orElseThrow(() -> new RuntimeException("Pdroduto não encontrado com esse id: " + id));
         return new Produto(recuperaProduto.getId(), recuperaProduto.getNome(), recuperaProduto.getCategoria(), recuperaProduto.getPreco());
     }
-
-//    @Override
-//    public Produto editaProduto(Produto produto) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void removerProduto(Long id) {
-//        repository.deleteById(id);
-//    }
-//
-//    @Override
-//    public Produto buscarProdutoPorCategoria(String categoria) {
-//        ProdutoEntity produto = repository.getByCategoria(categoria);
-//        return new Produto(produto.getId(),
-//                produto.getNome(),
-//                produto.getCategoria(),
-//                produto.getPreco());
-//    }
 }

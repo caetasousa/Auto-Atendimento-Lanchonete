@@ -18,26 +18,26 @@ public class ProdutoService implements ProdutoServicePort {
 
     @Override
     public Produto cadastraProduto(Produto produto) {
-        return repository.cadastraProduto(produto);
+        return repository.salvar(produto);
     }
 
     @Override
     public Produto editaProduto(Long id, Produto produto) {
-        return repository.editaProduto(id, produto);
+        return repository.update(id, produto);
     }
 
     @Override
     public void removerProduto(Long id) {
-        repository.removerProduto(id);
+        repository.delete(id);
     }
 
     @Override
     public List<Produto> buscarProdutoPorCategoria(Categoria categoria) {
-        return repository.buscarProdutoPorCategoria(categoria);
+        return repository.findByCategoria(categoria);
     }
 
     @Override
     public Produto buscarProdutoPorId(Long id) {
-        return repository.buscarProdutoPorId(id);
+        return repository.findById(id);
     }
 }

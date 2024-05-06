@@ -43,6 +43,10 @@ public class ProdutoEntity {
         this.categoria = categoria;
     }
 
+    public Produto converteParaProduto() {
+        return new Produto(id, nome, categoria, preco);
+    }
+
     public Long getId() {
         return id;
     }

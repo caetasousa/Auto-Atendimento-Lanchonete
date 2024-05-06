@@ -5,5 +5,5 @@ import caeta.techalanger.core.domain.Cliente;
 public interface ClienteRepositoryPort {
 
     Cliente salvar(Cliente cliente);
-    Cliente consultarCPF(String cpf);
+    Cliente findByCPF(String cpf);
 }
