@@ -1,7 +1,6 @@
 package caeta.techalanger.adapter.driver.controller.produto.validator;
 
 
-import caeta.techalanger.adapter.driver.controller.cliente.validator.UniqueCPFValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

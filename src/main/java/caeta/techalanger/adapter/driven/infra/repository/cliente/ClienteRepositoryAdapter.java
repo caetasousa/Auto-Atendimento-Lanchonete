@@ -5,6 +5,8 @@ import caeta.techalanger.core.domain.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class ClienteRepositoryAdapter implements ClienteRepositoryPort {
 
@@ -13,14 +15,14 @@ public class ClienteRepositoryAdapter implements ClienteRepositoryPort {
 
     @Override
     public Cliente salvar(Cliente cliente) {
-        ClienteEntity novoCliente = repository.save(new ClienteEntity(cliente.getNome(), cliente.getCpf(), cliente.getEmail()));
+        ClienteEntity novoCliente = repository.save(new ClienteEntity(cliente));
         return new Cliente(novoCliente.id, novoCliente.nome, cliente.getCpf(), cliente.getEmail());
     }
 
     @Override
-    public Cliente findByCPF(String cpf) {
-        ClienteEntity consulta = repository.findByCpf(cpf).orElseThrow(() -> new RuntimeException("Cliente não encontrado para o CPF: " + cpf));
+    public Optional<Cliente> findByCPF(String cpf) {
+        Optional<ClienteEntity> consulta = repository.findByCpf(cpf);
 
-        return new Cliente(consulta.getId(), consulta.getNome(), consulta.getCpf(), consulta.getEmail());
+        return consulta.map(ClienteEntity::paraCliente);
     }
 }

@@ -31,10 +31,11 @@ public class ClienteEntity {
     public ClienteEntity() {
     }
 
-    public ClienteEntity(String nome, String cpf, String email) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
+    public ClienteEntity(Cliente cliente) {
+        this.id = cliente.getId();
+        this.nome = cliente.getNome();
+        this.cpf = cliente.getCpf();
+        this.email = cliente.getEmail();
     }
 
     public Cliente paraCliente(){

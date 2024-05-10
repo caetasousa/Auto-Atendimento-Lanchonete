@@ -30,15 +30,14 @@ public class PedidoEntityItem {
     public PedidoEntityItem() {
     }
 
-    public PedidoEntityItem(int quantidade, PedidoEntity pedido, ProdutoEntity produto) {
-        this.quantidade = quantidade;
-        this.precoUnitario = produto.getPreco();
-        this.pedido = pedido;
-        this.produto = produto;
+    public PedidoEntityItem(PedidoItem item) {
+        this.quantidade = item.getQuantidade();
+        this.precoUnitario = item.getPrecoUnitario();
+        this.produto = new ProdutoEntity(item.getProduto());
     }
 
     public PedidoItem paraItemPedido() {
-        return new PedidoItem(produto.converteParaProduto(), quantidade);
+        return new PedidoItem(produto.paraProduto(), quantidade);
     }
 
     public Long getId() {

@@ -1,8 +1,6 @@
 package caeta.techalanger.adapter.driver.controller.produto.response;
 
-import caeta.techalanger.adapter.driver.controller.cliente.response.ClienteResponse;
 import caeta.techalanger.core.domain.Categoria;
-import caeta.techalanger.core.domain.Cliente;
 import caeta.techalanger.core.domain.Produto;
 
 import java.math.BigDecimal;

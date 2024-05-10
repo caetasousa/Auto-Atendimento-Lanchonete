@@ -1,17 +1,14 @@
 package caeta.techalanger.adapter.driven.infra.repository.pedido;
 
-import caeta.techalanger.adapter.driven.infra.repository.cliente.ClienteEntity;
 import caeta.techalanger.adapter.driven.infra.repository.cliente.ClienteRepository;
 import caeta.techalanger.adapter.driven.infra.repository.produto.ProdutoRepository;
-import caeta.techalanger.adapter.driver.controller.pedido.request.PedidoItensRequest;
 import caeta.techalanger.core.application.ports.PedidoRepositoryPort;
-import caeta.techalanger.core.domain.Cliente;
 import caeta.techalanger.core.domain.Pedido;
-import caeta.techalanger.core.domain.PedidoItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class PedidoRepositoryAdapter implements PedidoRepositoryPort {
@@ -28,23 +25,19 @@ public class PedidoRepositoryAdapter implements PedidoRepositoryPort {
     @Override
     public Pedido salvar(Pedido pedido) {
 
-        PedidoEntity pedidoEntity = new PedidoEntity();
+        PedidoEntity pedidoEntity = new PedidoEntity(pedido);
+        var pedidoSalvo = repository.save(pedidoEntity);
 
-        if (pedido.getCliente() != null) {
-            ClienteEntity clienteEntity = clienteRepository.findByCpf(pedido.getCliente().getCpf()).orElseThrow();
-            pedidoEntity.setCliente(clienteEntity);
-        }
+        return pedidoSalvo.paraPedido();
+    }
 
+    @Override
+    public List<Pedido> findAll() {
+        List<PedidoEntity> pedidos = repository.findAll();
 
-        List<PedidoItem> itensPedido = pedido.getItens();
-
-        for (PedidoItem item : itensPedido) {
-            var produto = produtoRepository.findById(item.getProduto().getId()).orElseThrow();
-            pedidoEntity.adicionarItem(new PedidoEntityItem(item.getQuantidade(), pedidoEntity, produto));
-        }
-        var novoPedido = repository.save(pedidoEntity);
-
-        return novoPedido.paraPedido();
+        return pedidos.stream()
+                .map(PedidoEntity::paraPedido)
+                .collect(Collectors.toList());
     }
 }
 

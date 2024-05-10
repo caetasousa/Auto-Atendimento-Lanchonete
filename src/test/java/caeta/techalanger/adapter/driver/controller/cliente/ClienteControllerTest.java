@@ -59,7 +59,7 @@ class ClienteControllerTest {
     @DisplayName("Nâo deve criar um cliente com CPF ja existente")
     @Transactional
     void teste2() throws Exception {
-        ClienteEntity clienteEntity = new ClienteEntity("Eduardo", "04423258196", "caetasousa@gmail.com");
+        ClienteEntity clienteEntity = new ClienteEntity(new Cliente("Eduardo", "04423258196", "caetasousa@gmail.com"));
         repository.save(clienteEntity);
 
         Cliente cliente = new Cliente("Eduardo", "04423258196", "caetasousa@gmail.com");
@@ -79,7 +79,7 @@ class ClienteControllerTest {
     @DisplayName("Testa se o cliente existe ao buscar por um cpf")
     @Transactional
     void teste3() throws Exception {
-        ClienteEntity clienteEntity = new ClienteEntity("Eduardo", "04423258196", "caetasousa@gmail.com");
+        ClienteEntity clienteEntity = new ClienteEntity(new Cliente("Eduardo", "04423258196", "caetasousa@gmail.com"));
         repository.save(clienteEntity);
 
         String responseBody = mockMvc.perform(MockMvcRequestBuilders.get("/cliente/{cpf}",clienteEntity.getCpf())

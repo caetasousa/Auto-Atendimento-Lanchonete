@@ -64,7 +64,7 @@ class ProdutoControllerTest {
     @DisplayName("Nâo deve criar um produto com um Nome ja existente")
     @Transactional
     void teste2() throws Exception {
-        ProdutoEntity produtoEntity = new ProdutoEntity("Coca-Cola", BigDecimal.valueOf(5),Categoria.valueOf("BEBIDA"));
+        ProdutoEntity produtoEntity = new ProdutoEntity(new Produto("Coca-Cola", Categoria.valueOf("BEBIDA"),BigDecimal.valueOf(5)));
         repository.save(produtoEntity);
 
         Produto produto = new Produto("Coca-Cola",  Categoria.valueOf("BEBIDA"), BigDecimal.valueOf(5));
@@ -84,7 +84,7 @@ class ProdutoControllerTest {
     @DisplayName("Testa se o produto existe ao buscar por um id")
     @Transactional
     void teste3() throws Exception {
-        ProdutoEntity produtoEntity = new ProdutoEntity("Coca-Cola", BigDecimal.valueOf(5),Categoria.valueOf("BEBIDA"));
+        ProdutoEntity produtoEntity = new ProdutoEntity(new Produto("Coca-Cola", Categoria.valueOf("BEBIDA"),BigDecimal.valueOf(5)));
         repository.save(produtoEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/produto/{id}",produtoEntity.getId())
@@ -99,7 +99,7 @@ class ProdutoControllerTest {
     @DisplayName("Deve editar um produto")
     @Transactional
     void teste4() throws Exception {
-        ProdutoEntity produtoEntity = new ProdutoEntity("Coca-Cola", BigDecimal.valueOf(5),Categoria.valueOf("BEBIDA"));
+        ProdutoEntity produtoEntity = new ProdutoEntity(new Produto("Coca-Cola", Categoria.valueOf("BEBIDA"),BigDecimal.valueOf(5)));
         repository.save(produtoEntity);
 
         Produto produto = new Produto("Suco",  Categoria.valueOf("BEBIDA"), BigDecimal.valueOf(5));
@@ -121,7 +121,7 @@ class ProdutoControllerTest {
     @DisplayName("Deve deletar um produto a partir de um id")
     @Transactional
     void teste5() throws Exception {
-        ProdutoEntity produtoEntity = new ProdutoEntity("Coca-Cola", BigDecimal.valueOf(5),Categoria.valueOf("BEBIDA"));
+        ProdutoEntity produtoEntity = new ProdutoEntity(new Produto("Coca-Cola", Categoria.valueOf("BEBIDA"),BigDecimal.valueOf(5)));
         repository.save(produtoEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/produto/{id}",produtoEntity.getId())
@@ -136,10 +136,10 @@ class ProdutoControllerTest {
     @DisplayName("Deve buscar produtos pela categoria")
     @Transactional
     void teste6() throws Exception {
-        ProdutoEntity produtoEntity1 = new ProdutoEntity("Coca-Cola", BigDecimal.valueOf(5),Categoria.valueOf("BEBIDA"));
+        ProdutoEntity produtoEntity1 = new ProdutoEntity(new Produto("Coca-Cola", Categoria.valueOf("BEBIDA"),BigDecimal.valueOf(5)));
         repository.save(produtoEntity1);
 
-        ProdutoEntity produtoEntity2 = new ProdutoEntity("Coca", BigDecimal.valueOf(5),Categoria.valueOf("BEBIDA"));
+        ProdutoEntity produtoEntity2 = new ProdutoEntity(new Produto("Coca", Categoria.valueOf("BEBIDA"),BigDecimal.valueOf(5)));
         repository.save(produtoEntity2);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/produto/categoria/{id}",produtoEntity1.getCategoria())

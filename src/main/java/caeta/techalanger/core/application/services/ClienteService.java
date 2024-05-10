@@ -19,6 +19,6 @@ public class ClienteService implements ClienteServicePort {
 
     @Override
     public Cliente consultarClientePorCPF(String cpf) {
-        return repository.findByCPF(cpf);
+        return repository.findByCPF(cpf).orElseThrow();
     }
 }

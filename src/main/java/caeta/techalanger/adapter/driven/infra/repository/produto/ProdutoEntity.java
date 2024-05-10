@@ -4,7 +4,6 @@ import caeta.techalanger.core.domain.Categoria;
 import caeta.techalanger.core.domain.Produto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
@@ -30,20 +29,14 @@ public class ProdutoEntity {
     public ProdutoEntity() {
     }
 
-    public ProdutoEntity(String nome, BigDecimal preco, Categoria categoria) {
-        this.nome = nome;
-        this.preco = preco;
-        this.categoria = categoria;
+    public ProdutoEntity(Produto produto) {
+        this.id = produto.getId();
+        this.nome = produto.getNome();
+        this.preco = produto.getPreco();
+        this.categoria = produto.getCategoria();
     }
 
-    public ProdutoEntity(Long id, String nome, BigDecimal preco, Categoria categoria) {
-        this.id = id;
-        this.nome = nome;
-        this.preco = preco;
-        this.categoria = categoria;
-    }
-
-    public Produto converteParaProduto() {
+    public Produto paraProduto() {
         return new Produto(id, nome, categoria, preco);
     }
 

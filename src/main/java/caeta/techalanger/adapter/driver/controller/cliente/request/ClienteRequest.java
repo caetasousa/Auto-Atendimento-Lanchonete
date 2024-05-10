@@ -18,6 +18,7 @@ public class ClienteRequest {
     @Email
     String email;
 
+    @Deprecated
     public ClienteRequest() {
     }
 

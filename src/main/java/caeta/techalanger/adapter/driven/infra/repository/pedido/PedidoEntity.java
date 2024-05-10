@@ -2,13 +2,9 @@ package caeta.techalanger.adapter.driven.infra.repository.pedido;
 
 import caeta.techalanger.adapter.driven.infra.repository.cliente.ClienteEntity;
 import caeta.techalanger.core.domain.Pedido;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import caeta.techalanger.core.domain.PedidoItem;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,16 +26,22 @@ public class PedidoEntity {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<PedidoEntityItem> itens = new ArrayList<>();
 
+    @Deprecated
     public PedidoEntity() {
     }
 
-    public PedidoEntity(ClienteEntity cliente) {
-        this.cliente = cliente;
+    public PedidoEntity(Pedido pedido) {
+        this.cliente = Optional.ofNullable(pedido.getCliente()).map(ClienteEntity::new).orElse(null);
+        this.itens = adicionarItem(pedido.getItens());
     }
 
-    public void adicionarItem(PedidoEntityItem item) {
-        item.setPedido(this);
-        this.itens.add(item);
+    public List<PedidoEntityItem> adicionarItem(List<PedidoItem> listaDeItens) {
+        listaDeItens.forEach(item -> {
+            PedidoEntityItem pedidoEntityItem = new PedidoEntityItem(item);
+            pedidoEntityItem.setPedido(this);
+            this.itens.add(pedidoEntityItem);
+        });
+        return this.itens;
     }
 
     public Pedido paraPedido() {

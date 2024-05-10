@@ -10,7 +10,6 @@ import caeta.techalanger.core.domain.Cliente;
 import caeta.techalanger.core.domain.Pedido;
 import caeta.techalanger.core.domain.PedidoItem;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class PedidoService implements PedidoServicePort {
@@ -28,21 +27,25 @@ public class PedidoService implements PedidoServicePort {
 
     @Override
     public Pedido criarPedido(PedidoRequest request) {
+
+        Cliente cliente = clienteRepositoryPort.findByCPF(request.getCliente()).orElse(null);
         Pedido pedido = new Pedido();
 
-        if (request.getCliente() != null) {
-            Cliente cliente = clienteRepositoryPort.findByCPF(request.getCliente());
-            pedido.setCliente(cliente);
-        }
+        pedido.setCliente(cliente);
 
         List<PedidoItensRequest> itensPedido = request.getItens();
 
         for (PedidoItensRequest item : itensPedido) {
-        var produto = produtoRepositoryPort.findById(item.getProdutoId());
+            var produto = produtoRepositoryPort.findById(item.getProdutoId());
             pedido.adicionarItem(new PedidoItem(item.getQuantidade(), produto, pedido));
         }
         pedido = pedidoRepositoryPort.salvar(pedido);
 
         return pedido;
+    }
+
+    @Override
+    public List<Pedido> listarPedidos() {
+        return pedidoRepositoryPort.findAll();
     }
 }

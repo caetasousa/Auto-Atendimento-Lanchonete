@@ -1,13 +1,10 @@
 package caeta.techalanger.adapter.driver.controller.produto;
 
-import caeta.techalanger.adapter.driver.controller.cliente.request.ClienteRequest;
-import caeta.techalanger.adapter.driver.controller.cliente.response.ClienteResponse;
 import caeta.techalanger.adapter.driver.controller.produto.request.ProdutoRequest;
 import caeta.techalanger.adapter.driver.controller.produto.request.ProdutoUpdate;
 import caeta.techalanger.adapter.driver.controller.produto.response.ProdutoResponse;
 import caeta.techalanger.core.application.ports.ProdutoServicePort;
 import caeta.techalanger.core.domain.Categoria;
-import caeta.techalanger.core.domain.Cliente;
 import caeta.techalanger.core.domain.Produto;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

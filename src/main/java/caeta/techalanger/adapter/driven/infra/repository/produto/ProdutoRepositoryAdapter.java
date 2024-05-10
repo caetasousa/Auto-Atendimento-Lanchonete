@@ -17,7 +17,7 @@ public class ProdutoRepositoryAdapter implements ProdutoRepositoryPort {
 
     @Override
     public Produto salvar(Produto produto) {
-        ProdutoEntity novoProduto = new ProdutoEntity(produto.getNome(), produto.getPreco(), produto.getCategoria());
+        ProdutoEntity novoProduto = new ProdutoEntity(produto);
 
         repository.save(novoProduto);
         return new Produto(novoProduto.getId(),

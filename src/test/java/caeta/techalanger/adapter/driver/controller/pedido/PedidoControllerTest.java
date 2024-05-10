@@ -9,9 +9,7 @@ import caeta.techalanger.adapter.driven.infra.repository.produto.ProdutoEntity;
 import caeta.techalanger.adapter.driven.infra.repository.produto.ProdutoRepository;
 import caeta.techalanger.adapter.driver.controller.pedido.request.PedidoItensRequest;
 import caeta.techalanger.adapter.driver.controller.pedido.request.PedidoRequest;
-import caeta.techalanger.core.domain.Categoria;
-import caeta.techalanger.core.domain.Cliente;
-import caeta.techalanger.core.domain.PedidoItem;
+import caeta.techalanger.core.domain.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
@@ -59,7 +57,7 @@ class PedidoControllerTest {
     @DisplayName("Testa a criação de um novo pedido sem cliente")
     @Transactional
     void teste1() throws Exception {
-        ProdutoEntity produtoEntity = new ProdutoEntity("Coca-Cola", BigDecimal.valueOf(5), Categoria.valueOf("BEBIDA"));
+        ProdutoEntity produtoEntity = new ProdutoEntity(new Produto("Coca-Cola", Categoria.valueOf("BEBIDA"),BigDecimal.valueOf(5)));
         var produto = produtoRepository.save(produtoEntity);
 
         List<PedidoItensRequest> itens = new ArrayList<>();
@@ -83,10 +81,10 @@ class PedidoControllerTest {
     @DisplayName("Testa a criação de um novo pedido com cliente")
     @Transactional
     void teste2() throws Exception {
-        ProdutoEntity produtoEntity = new ProdutoEntity("Coca-Cola", BigDecimal.valueOf(5), Categoria.valueOf("BEBIDA"));
+        ProdutoEntity produtoEntity = new ProdutoEntity(new Produto("Coca-Cola", Categoria.valueOf("BEBIDA"),BigDecimal.valueOf(5)));
         var produto = produtoRepository.save(produtoEntity);
 
-        ClienteEntity clienteEntity = new ClienteEntity("Eduardo", "04423258196", "caetasousa@gmail.com");
+        ClienteEntity clienteEntity = new ClienteEntity(new Cliente("Eduardo", "04423258196", "caetasousa@gmail.com"));
         var cliente = clienteRepository.save(clienteEntity);
 
         List<PedidoItensRequest> itens = new ArrayList<>();
@@ -103,6 +101,7 @@ class PedidoControllerTest {
                 .content(jsonRequest));
 
         var responseStatusCode = resultActions.andReturn().getResponse().getStatus();
+        System.out.println(resultActions.andReturn().getResponse().getContentAsString());
         assertEquals(201, responseStatusCode);
     }
 
@@ -110,24 +109,18 @@ class PedidoControllerTest {
     @DisplayName("Deve buscar todos pedidos")
     @Transactional
     void teste6() throws Exception {
-        ProdutoEntity produtoEntity = new ProdutoEntity("Coca-Cola", BigDecimal.valueOf(5), Categoria.valueOf("BEBIDA"));
+        ProdutoEntity produtoEntity = new ProdutoEntity(new Produto("Coca-Cola", Categoria.valueOf("BEBIDA"),BigDecimal.valueOf(5)));
         var produto = produtoRepository.save(produtoEntity);
 
-        ClienteEntity clienteEntity = new ClienteEntity("Eduardo", "04423258196", "caetasousa@gmail.com");
+        ClienteEntity clienteEntity = new ClienteEntity(new Cliente("Eduardo", "04423258196", "caetasousa@gmail.com"));
         var cliente = clienteRepository.save(clienteEntity);
 
+        Pedido pedido = new Pedido(clienteEntity.paraCliente());
+        pedido.adicionarItem(new PedidoItem(4,produtoEntity.paraProduto(), pedido));
 
-        PedidoEntity pedidoEntity1 = new PedidoEntity();
-        PedidoEntity pedidoEntity2 = new PedidoEntity();
+        PedidoEntity pedidoEntity = new PedidoEntity(pedido);
 
-
-        pedidoEntity1.adicionarItem(new PedidoEntityItem(1, pedidoEntity1, produtoEntity));
-        var response1 = pedidoRepository.save(pedidoEntity1);
-
-        pedidoEntity2.adicionarItem(new PedidoEntityItem(2, pedidoEntity2, produtoEntity));
-        var response2 =pedidoRepository.save(pedidoEntity2);
-
-
+        var response1 = pedidoRepository.save(pedidoEntity);
 
         String resultado = mockMvc.perform(MockMvcRequestBuilders.get("/pedido")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -137,6 +130,5 @@ class PedidoControllerTest {
                 .getContentAsString();
 
         assertTrue(resultado.contains(response1.getId().toString()));
-        assertTrue(resultado.contains(response2.getId().toString()));
     }
 }

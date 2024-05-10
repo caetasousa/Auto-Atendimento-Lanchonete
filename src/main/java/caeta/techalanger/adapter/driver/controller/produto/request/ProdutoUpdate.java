@@ -1,6 +1,5 @@
 package caeta.techalanger.adapter.driver.controller.produto.request;
 
-import caeta.techalanger.adapter.driver.controller.produto.validator.UniqueNome;
 import caeta.techalanger.core.domain.Categoria;
 import caeta.techalanger.core.domain.Produto;
 import jakarta.persistence.EnumType;

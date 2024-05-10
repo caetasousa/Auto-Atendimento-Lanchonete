@@ -11,15 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BeanConfiguration {
-    private final ClienteRepositoryPort clienteRepositoryPort;
-    private final ProdutoRepositoryPort produtoRepositoryPort;
-    private final PedidoRepositoryPort pedidoRepositoryPort;
-
-    public BeanConfiguration(ClienteRepositoryPort clienteRepositoryPort, ProdutoRepositoryPort produtoRepositoryPort, PedidoRepositoryPort pedidoRepositoryPort) {
-        this.clienteRepositoryPort = clienteRepositoryPort;
-        this.produtoRepositoryPort = produtoRepositoryPort;
-        this.pedidoRepositoryPort = pedidoRepositoryPort;
-    }
 
     @Bean
     public ClienteServicePort clienteServiceImpl(ClienteRepositoryPort clienteRepositoryPort) {
@@ -31,10 +22,8 @@ public class BeanConfiguration {
         return  new ProdutoService(produtoRepositoryPort);
     }
 
-
-
     @Bean
-    public PedidoService pedidoService() {
+    public PedidoService pedidoServiceImpl(ClienteRepositoryPort clienteRepositoryPort, ProdutoRepositoryPort produtoRepositoryPort, PedidoRepositoryPort pedidoRepositoryPort) {
         return new PedidoService(clienteRepositoryPort, produtoRepositoryPort, pedidoRepositoryPort);
     }
 }
