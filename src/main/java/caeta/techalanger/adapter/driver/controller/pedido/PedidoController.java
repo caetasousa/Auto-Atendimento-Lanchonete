@@ -1,6 +1,7 @@
 package caeta.techalanger.adapter.driver.controller.pedido;
 
 import caeta.techalanger.adapter.driver.controller.pedido.request.PedidoRequest;
+import caeta.techalanger.adapter.driver.controller.pedido.response.PedidoResponse;
 import caeta.techalanger.core.application.services.PedidoService;
 import caeta.techalanger.core.domain.Pedido;
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ public class PedidoController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Pedido>> buscarPedidos() {
-        return ResponseEntity.ok(pedidoService.listarPedidos());
+    public ResponseEntity<List<PedidoResponse>> buscarPedidos() {
+        return ResponseEntity.ok(PedidoResponse.paraDomainResponse(pedidoService.listarPedidos()));
     }
 }

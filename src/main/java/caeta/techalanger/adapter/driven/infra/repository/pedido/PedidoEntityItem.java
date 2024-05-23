@@ -37,7 +37,7 @@ public class PedidoEntityItem {
     }
 
     public PedidoItem paraItemPedido() {
-        return new PedidoItem(produto.paraProduto(), quantidade);
+        return new PedidoItem(produto.paraProduto(), quantidade, id);
     }
 
     public Long getId() {

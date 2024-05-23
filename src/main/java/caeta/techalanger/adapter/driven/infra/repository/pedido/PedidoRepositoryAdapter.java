@@ -16,12 +16,6 @@ public class PedidoRepositoryAdapter implements PedidoRepositoryPort {
     @Autowired
     private PedidoRepository repository;
 
-    @Autowired
-    private ClienteRepository clienteRepository;
-
-    @Autowired
-    private ProdutoRepository produtoRepository;
-
     @Override
     public Pedido salvar(Pedido pedido) {
 

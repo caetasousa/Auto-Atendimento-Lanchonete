@@ -24,6 +24,13 @@ public class PedidoItem {
         this.precoUnitario = produto.getPreco();
     }
 
+    public PedidoItem(Produto produto, int quantidade, Long id) {
+        this.produto = produto;
+        this.quantidade = quantidade;
+        this.precoUnitario = produto.getPreco();
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
